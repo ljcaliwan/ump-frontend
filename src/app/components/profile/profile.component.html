@@ -1,0 +1,118 @@
+<div class="container py-5">
+    <form>
+        <div class="grid grid-cols-4 sm:grid-cols-12 gap-6">
+            <div class="col-span-4 sm:col-span-3">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <div class="flex flex-col items-center">
+                        <img *ngIf="tempProfile" [src]="tempProfile ? tempProfile : 'assets/images/default_profile.png' " class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"/>
+                        <img *ngIf="!tempProfile" [src]="user.profileImageUrl ? user.profileImageUrl : 'assets/images/default_profile.png'" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"/>
+                        <h1 class="text-xl font-bold">{{user.firstName}} {{user.lastName}}</h1>
+                        <p class="text-gray-600">{{user.email}}</p>
+                        <div class="flex flex-col font-poppins text-14 mt-3 h-[32px] w-[70%]">
+                            <input #fileInput type="file" (change)="onFileChange(fileInput); updateProfileImage()" hidden accept="image/*">
+                            <button  class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full" (click)="fileInput.click()">Upload</button>
+                        </div>
+                    </div>
+                    <hr class="my-6 border-t border-gray-300">
+                    <div class="flex flex-col">
+                        <span class="text-gray-600 uppercase font-bold tracking-wider mb-2">Roles: </span>
+                        <ul *ngFor="let authority of user.authorities">
+                            <li class="mb-2">{{authority}}</li>                            
+                        </ul>
+                    </div>
+                    <div *ngIf="fileStatus?.status === 'progress'" class="shadow w-full bg-grey-light">
+                        <div [style.width.%]="fileStatus.percentage" class="bg-blue-800 text-xs leading-none py-1 text-center text-white" style="width: 45%">{{fileStatus.percentage}}%</div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-span-4 sm:col-span-9">
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <div class="flex flex-col">
+                        <div class="flex flex-row space-x-5">
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">First Name</label>
+                                <input type="text" [(ngModel)]="user.firstName" name="firstName" placeholder="Enter First Name" required
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                />
+                                <!-- <ng-container *ngIf="errors['name']">
+                                    <small class="text-danger" *ngFor="let error of errors['name']">* {{ error }}</small>
+                                </ng-container> -->
+                            </div>
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">Last Name</label>
+                                <input type="text" [(ngModel)]="user.lastName" name="lastName" placeholder="Enter Last Name" required
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                />
+                                <!-- <ng-container *ngIf="errors['contact']">
+                                    <small class="text-danger" *ngFor="let error of errors['contact']">* {{ error }}</small>
+                                </ng-container> -->
+                            </div>
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">Email</label>
+                                <input type="text" [(ngModel)]="user.email" name="email" placeholder="Enter Email" required
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                />
+                                <!-- <ng-container *ngIf="errors['email']">
+                                    <small class="text-danger" *ngFor="let error of errors['email']">* {{ error }}</small>
+                                </ng-container> -->
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row space-x-5">
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">Role {{!isAdmin ? ' (Read only)' : ''}}</label>
+                                <select [disabled]="!isAdmin" name="role" required [(ngModel)]="user.role" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                    <option value="ROLE_USER">USER</option>
+                                    <option value="ROLE_HR">HR</option>
+                                    <option value="ROLE_MANAGER">MANAGER</option>
+                                    <option value="ROLE_ADMIN">ADMIN</option>
+                                    <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">Username</label>
+                                <input type="text" [(ngModel)]="user.username" name="username" placeholder="Enter Username" required
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                />
+                                <!-- <ng-container *ngIf="errors['contact']">
+                                    <small class="text-danger" *ngFor="let error of errors['contact']">* {{ error }}</small>
+                                </ng-container> -->
+                            </div>
+                            <div class="flex flex-col font-poppins text-14 mb-10 w-full">
+                                <label class="mb-[5px]">Phone</label>
+                                <input type="text" [(ngModel)]="user.phone" name="phone" placeholder="Enter you phone no." required
+                                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                />
+                                <!-- <ng-container *ngIf="errors['email']">
+                                    <small class="text-danger" *ngFor="let error of errors['email']">* {{ error }}</small>
+                                </ng-container> -->
+                            </div>
+                        </div>
+                
+                        <div class="flex flex-row space-x-5">                            
+                            <fieldset class="form-group">
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" name="active" [(ngModel)]="user.active" class="form-check-input" >
+                                    Acitve
+                                  </label>
+                                </div>
+                                <div class="form-check disabled">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" name="notLocked" [(ngModel)]="user.notLocked" class="form-check-input">
+                                    Unlocked
+                                  </label>
+                                </div>
+                              </fieldset>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row justify-end pt-[20px]">
+            <button [mat-dialog-close]="false" class="button-cancel mr-[10px]">Cancel</button>
+            <button (click)="save()" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-full mr-[10px]">Save</button>
+        </div>
+    </form>
+</div>

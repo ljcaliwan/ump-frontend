@@ -1,0 +1,55 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="px-8 py-6 mx-4 text-left bg-white z-0 mt-[-90px] shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3">
+        <h3 class="text-2xl font-bold text-center">Register</h3>
+        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)">
+            <div class="mt-4">
+                <div>
+                    <label class="block" for="Name">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name" ngModel #firstNameInput="ngModel" 
+                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <ng-container *ngIf="errors?.firstName">
+                        <small class="text-red-600"> {{ errors.firstName }}</small>
+                    </ng-container>
+                </div>
+                <div class="mt-4">
+                    <label class="block" for="email">Last Name</label>
+                    <input type="lastName"id="lastName" name="lastName" placeholder="Last Name" ngModel #lastNameInput="ngModel" 
+                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <ng-container *ngIf="errors?.lastName">
+                        <small class="text-red-600"> {{ errors.lastName }}</small>
+                    </ng-container>
+                </div>
+                <div class="mt-4">
+                    <label class="block" for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Email" ngModel #emailInput="ngModel"
+                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <ng-container *ngIf="errors?.email">
+                        <small class="text-red-600"> {{ errors.email }}</small>
+                    </ng-container>
+                </div>
+                <div class="mt-4">
+                    <label class="block" for="contact">Phone</label>
+                    <input type="text"id="phone" name="phone" placeholder="Phone" ngModel #contactInput="ngModel"
+                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <ng-container *ngIf="errors?.phone">
+                        <small class="text-red-600"> {{ errors.phone }}</small>
+                    </ng-container>
+                </div>
+                <div class="mt-4">
+                    <label class="block">Username</label>
+                    <input type="text"id="username" name="username" placeholder="Username" ngModel #usernameInput="ngModel"
+                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <ng-container *ngIf="errors?.username">
+                        <small class="text-red-600"> {{ errors.username }}</small>
+                    </ng-container>
+                </div>
+                <div class="flex">
+                    <button type="submit" class="w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
+                        Register
+                    </button>
+                </div>
+                <div class="mt-6 text-grey-dark">Already have an account?<a routerLink="/login" class="text-blue-600 hover:underline"> Login here</a></div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div mat-dialog-content class="min-w-[350px] rounded-md ">
+    <h1 mat-dialog-title class="text-center mb-5">Confirmation Delete</h1>
+    <p>Are you sure you want to delete {{ userName }}?<br></p>
+    <div>
+        <div class="justify-end py-14 text-center pt-[20px]">
+            <button [mat-dialog-close]="false" class="button-cancel mr-[10px] bg-white text-blue-600 border border-blue-600 py-2 px-7 rounded-full">Cancel</button>
+            <button [mat-dialog-close]="true" class="button-save bg-red-500 hover:bg-red-600 text-white py-2 px-7 rounded-full">Confirm</button>
+        </div>
+    </div>  
+</div>

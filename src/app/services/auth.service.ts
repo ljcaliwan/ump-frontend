@@ -2,30 +2,30 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
-import { IUser } from '../models/user.model';
+import { Observable, Subject } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     private token: any;
-    loggedInUsername: any;
+    loggedInUsername = new Subject<string>();
     private jwtHelperService = new JwtHelperService();
+    host = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
-    register(user: IUser): Observable<HttpResponse<any> | HttpErrorResponse> {
-        return this.http.post<HttpResponse<any> | HttpErrorResponse>(`${environment.apiUrl}/user/register`, user, {observe: 'response'});
+    login(user: User): Observable<HttpResponse<User>> {
+        return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
     }
 
-    login(user: IUser): Observable<HttpResponse<any> | HttpErrorResponse> {
-        return this.http.post<HttpResponse<IUser> | HttpErrorResponse>(`${environment.apiUrl}/user/login`, user);
+    register(user: User): Observable<User> {
+        return this.http.post<User>(`${this.host}/user/register`, user);
     }
 
     logout(): void {
         this.token = null;
-        this.loggedInUsername = null;
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         localStorage.removeItem('users');
@@ -36,7 +36,7 @@ export class AuthService {
         if(this.token !== null && this.token !== ''){
             if(this.jwtHelperService.decodeToken(this.token).sub !== null || '') {
                 if(!this.jwtHelperService.isTokenExpired(this.token)) {
-                    this.loggedInUsername = this.jwtHelperService.decodeToken(this.token).sub;
+                    this.loggedInUsername.next(this.jwtHelperService.decodeToken(this.token).sub);
                     return true;
                 }
             }
@@ -59,13 +59,20 @@ export class AuthService {
         return this.token;
     }
 
-    saveUserToLocalStorage(user: IUser): void {
-        localStorage.setItem('users', JSON.stringify(user));
+    saveUserToLocalStorage(user: User): void {
+        localStorage.setItem('user', JSON.stringify(user));
     }
     
-    getUserFromLocalStorage(): IUser | null {
+    getUserFromLocalStorage(): User {
         const userString = localStorage.getItem('user');
-        return userString ? JSON.parse(userString) as IUser : null;
+        if(userString) {
+            return JSON.parse(userString); 
+        }
+        return new User;
+    }
+
+    getLoggedInUsername(): Observable<string>{
+        return this.loggedInUsername.asObservable();
     }
 
 }

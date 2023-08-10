@@ -1,0 +1,49 @@
+<header>
+    <div class="mt-6">
+        <nav
+            class="flex items-center justify-between flex-wrap bg-primary p-6 shadow-md"
+        >
+            <div class="flex items-center flex-shrink-0 text-sky-950 mr-6">
+                <span (click)="onTitleClick('Users')" routerLink="/user/management" class="font-semibold text-xl tracking-tight"
+                *ngIf="titleAction$ | async as title">{{ title }}</span
+                >
+            </div>
+            <div class="block lg:hidden">
+                <button
+                    class="flex items-center px-3 py-2 border rounded text-sky-700 border-text-sky-700 hover:text-sky-700 hover:border-sky-950"
+                >
+                    <svg
+                        class="fill-current h-3 w-3"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <title>Menu</title>
+                        <path
+                            d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+                <div class="text-sm lg:flex-grow">
+                    <a *ngIf="isAdmin" (click)="onTitleClick('Settings')" routerLink="/reset-password" class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700 mr-4">
+                        Settings
+                    </a>
+                </div>
+                <div class="flex items-center font-bold mr-5 cursor-pointer">
+                    <p (click)="logout()" class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700">
+                        Logout
+                    </p>
+                </div>
+                <div (click)="onTitleClick('Profile')" routerLink="/user/profile"  class="flex items-center space-x-2 cursor-pointer">
+                    <p class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700">
+                        Welcome, {{loggedInUsername}}
+                    </p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                      </svg>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

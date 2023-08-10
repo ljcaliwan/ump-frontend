@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '~ngx-toastr/toastr';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.default-input {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins';
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 100%;
+  }
+  
+  .default-input label {
+    margin-bottom: 5px;
+  }
+  
+  .default-input input,
+  .default-input select,
+  .default-input textarea {
+    padding: 7px 15px;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid gray;
+  }
+  

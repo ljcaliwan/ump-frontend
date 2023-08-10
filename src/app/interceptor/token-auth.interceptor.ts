@@ -10,13 +10,10 @@ export class TokenAuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) {}
 
     intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if(httpRequest.url.includes(`${environment}/user/login`)) {
+        if(httpRequest.url.includes(`${this.authService.host}/user/login`)) {
             return next.handle(httpRequest);
         }
-        if(httpRequest.url.includes(`${environment}/user/register`)) {
-            return next.handle(httpRequest);
-        }
-        if(httpRequest.url.includes(`${environment}/user/reset-password`)) {
+        if(httpRequest.url.includes(`${this.authService.host}/user/register`)) {
             return next.handle(httpRequest);
         }
 
