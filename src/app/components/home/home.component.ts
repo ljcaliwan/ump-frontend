@@ -14,7 +14,7 @@ import { RoleService } from 'src/app/services/role.service';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
     users: User[] = [];

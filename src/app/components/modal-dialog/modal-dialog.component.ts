@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
     selector: 'app-modal-dialog',
     templateUrl: './modal-dialog.component.html',
-    styleUrls: ['./modal-dialog.component.css']
+    styleUrls: ['./modal-dialog.component.scss']
     })
 export class ModalDialogComponent implements OnInit {
     user: User = new User();
@@ -34,6 +34,8 @@ export class ModalDialogComponent implements OnInit {
         this.userService.isNewUser.subscribe((value) => {
             this.isNewUser = value;
         })
+        console.log(this.getErrors());
+        
     }
 
     ngOnInit(): void {}
@@ -67,7 +69,7 @@ export class ModalDialogComponent implements OnInit {
         };
     }
 
-    getErrors() {
+    private getErrors() {
+        this.errors = this.userService.getErrors();
     }
-
 }

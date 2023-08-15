@@ -21,6 +21,7 @@ export class UserService {
     isNewUser: Observable<boolean> = this.isNewUserState.asObservable();
     private loggedInUsername = new Subject<string>();
     users: User[] = [];
+    errors: any = {};
 
     constructor(private toaster: ToastrService, private apiService: ApiService,private authService: AuthService) { 
     }
@@ -47,9 +48,9 @@ export class UserService {
             next: (response) => {
                 this.isAddedOrUpdated.next(true);
                 this.toaster.success(ToesterMessage.SUCCESS_MSG, ToesterType.SUCCESS)
-
             },
             error: (error) => {
+                this.errors = error.error;
                 this.isAddedOrUpdated.next(false);
                 this.toaster.error(error.error.message, 'Error')
             },
@@ -140,5 +141,9 @@ export class UserService {
 
     getLoggedInUsername(): Observable<string> {
         return this.loggedInUsername.asObservable();
+    }
+
+    getErrors(): any {
+        return this.errors;
     }
 }

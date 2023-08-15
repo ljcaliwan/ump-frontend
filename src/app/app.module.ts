@@ -20,6 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
         ProfileComponent,
         DeleteModalComponent,
         ModalDialogComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,5 @@
 <header>
-    <div class="mt-6">
+    <div>
         <nav
             class="flex items-center justify-between flex-wrap bg-primary p-6 shadow-md"
         >
@@ -26,14 +26,9 @@
             </div>
             <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                 <div class="text-sm lg:flex-grow">
-                    <a *ngIf="isAdmin" (click)="onTitleClick('Settings')" routerLink="/reset-password" class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700 mr-4">
+                    <a (click)="onTitleClick('Settings')" routerLink="/reset-password" class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700 mr-4">
                         Settings
                     </a>
-                </div>
-                <div class="flex items-center font-bold mr-5 cursor-pointer">
-                    <p (click)="logout()" class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700">
-                        Logout
-                    </p>
                 </div>
                 <div (click)="onTitleClick('Profile')" routerLink="/user/profile"  class="flex items-center space-x-2 cursor-pointer">
                     <p class="block mt-4 lg:inline-block lg:mt-0 font-roboto text-base text-sky-950 hover:text-sky-700">

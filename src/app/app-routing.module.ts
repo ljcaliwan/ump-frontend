@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { authGuard } from './guard/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { settingGuard } from './guard/setting.guard';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,11 @@ const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
+    },
+    {
+        path: 'dashboard', 
+        canActivate: [authGuard],
+        component: DashboardComponent,
     },
     {
         path: 'user/management', 
@@ -29,7 +35,7 @@ const routes: Routes = [
     },
     {
         path: 'reset-password',
-        canActivate: [authGuard, settingGuard],
+        canActivate: [authGuard],
         component: ResetPasswordComponent,
     },
     {

@@ -6,18 +6,22 @@ import { Subscription } from 'rxjs';
 import { ToesterType } from 'src/app/enum/toaster-type.enum';
 import { ICustomHttpResponse } from 'src/app/models/custom-response.model';
 import { ApiService } from 'src/app/services/api.service';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
     subscription: Subscription[] = [];
+    isAdmin: boolean = false;
 
-    constructor(private apiService: ApiService, private toaster: ToastrService) {}
+    constructor(private apiService: ApiService, private roleService: RoleService, private toaster: ToastrService) {}
     
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.isAdmin = this.roleService.isAdmin;
+    }
 
     resetPassword(emailForm: NgForm) {
         const email = emailForm.value['email'];
